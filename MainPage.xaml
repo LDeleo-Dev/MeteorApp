@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 x:Class="AppMeteoMAUI.MainPage"
+			 BackgroundColor="#F9FFFFFF">
+
+
+	<ScrollView>
+		<VerticalStackLayout Padding="30,0" Spacing="20">
+			<Grid x:Name="SearchBarGrid">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="Auto" />
+				</Grid.ColumnDefinitions>
+				   <!-- Titolo rimosso, ora solo nella barra superiore -->
+				   <Entry x:Name="CityEntry" Placeholder="Inserisci una o più città..." TextColor="Black" PlaceholderColor="Black" Grid.Row="1" Grid.Column="0" />
+				<Button Text="Cerca" Clicked="OnSearchClicked" Grid.Row="1" Grid.Column="1" />
+			</Grid>
+			<CollectionView x:Name="ResultsView" Margin="0,10" HorizontalOptions="Center" >
+				<CollectionView.ItemsLayout>
+					<LinearItemsLayout Orientation="Horizontal" ItemSpacing="16" />
+				</CollectionView.ItemsLayout>
+				<CollectionView.ItemTemplate>
+					<DataTemplate>
+						<Frame Margin="0,8" Padding="14,16" BorderColor="#2196F3" BackgroundColor="#E3F2FD" HasShadow="True" WidthRequest="340">
+							<VerticalStackLayout Spacing="10" HorizontalOptions="Center">
+								<Image Source="{Binding IconaMeteo}" HeightRequest="40" WidthRequest="40" HorizontalOptions="Center" />
+								<Label Text="{Binding Nome}" FontAttributes="Bold" FontSize="20" TextColor="Black" HorizontalOptions="Center" />
+								<Label Text="{Binding Temp, StringFormat='Temperatura: {0:0.#} °C'}" FontSize="16" TextColor="Black" HorizontalOptions="Center" />
+								<Label Text="{Binding Wind, StringFormat='Vento: {0:0.#} km/h'}" FontSize="16" TextColor="Black" HorizontalOptions="Center" />
+								<CollectionView ItemsSource="{Binding Previsione}" Margin="0,10">
+									<CollectionView.ItemsLayout>
+										<LinearItemsLayout Orientation="Vertical" ItemSpacing="6" />
+									</CollectionView.ItemsLayout>
+									<CollectionView.ItemTemplate>
+										<DataTemplate>
+											<Frame Margin="0,2" Padding="8" CornerRadius="8" BorderColor="#90CAF9" BackgroundColor="#E3F2FD">
+												<VerticalStackLayout Spacing="2">
+													<HorizontalStackLayout Spacing="6" VerticalOptions="Center">
+														<Image Source="{Binding IconaMeteo}" HeightRequest="24" WidthRequest="24" />
+														<Label Text="{Binding Giorno}" FontAttributes="Bold" TextColor="Black" />
+													</HorizontalStackLayout>
+													<HorizontalStackLayout Spacing="10">
+														<Label Text="{Binding Min, StringFormat='Min: {0:0.#}°C'}" TextColor="Black" />
+														<Label Text="{Binding Max, StringFormat='Max: {0:0.#}°C'}" TextColor="Black" />
+														<Label Text="{Binding Pioggia, StringFormat='Pioggia: {0:0.#} mm'}" TextColor="Black" />
+													</HorizontalStackLayout>
+												</VerticalStackLayout>
+											</Frame>
+										</DataTemplate>
+									</CollectionView.ItemTemplate>
+								</CollectionView>
+							</VerticalStackLayout>
+						</Frame>
+					</DataTemplate>
+				</CollectionView.ItemTemplate>
+			</CollectionView>
+		</VerticalStackLayout>
+	</ScrollView>
+
+</ContentPage>
